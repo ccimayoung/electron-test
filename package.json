@@ -1,5 +1,7 @@
 {
   "name": "electron-test",
+  "main": "public/electron.js",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,20 +9,37 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.68",
+    "@types/node": "^20.10.5",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
-    "react": "^18.2.0",
+    "@types/react-router": "^5.1.20",
+    "@types/styled-components": "^5.1.34",
+    "concurrently": "^8.2.2",
+    "electron-store": "^8.1.0",
     "react-dom": "^18.2.0",
+    "react-router": "^6.21.1",
+    "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
+    "styled-components": "^6.1.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "react:start": "react-scripts start",
+    "electron:start": "wait-on http://localhost:3000 && electron .",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "tsc ./public/electron.ts && concurrently \"npm run react:start\" \"electron . && wait-on http://127.0.0.1:3000 .\""
+  },
+  "build": {
+    "appId": "com.example.electron-app",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +58,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-is-dev": "^2.0.0",
+    "react": "^18.2.0",
+    "typescript": "^5.3.3"
   }
 }
